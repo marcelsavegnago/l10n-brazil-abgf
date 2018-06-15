@@ -15,6 +15,10 @@ class StockPicking(models.Model):
     def _get_period(self):
         return self.env['account.move']._get_period()
 
+    state = fields.Selection(
+        selection_add=[('provisorio', 'Recebimento Provisório')]
+    )
+
     journal_id = fields.Many2one(
         string='Diário',
         comodel_name='account.journal',
@@ -29,11 +33,13 @@ class StockPicking(models.Model):
     temporary_move_id = fields.Many2one(
         string='Movimentações Contábeis Temporário',
         comodel_name='account.move',
+        ondelete='restrict'
     )
 
     definitive_move_id = fields.Many2one(
         string='Movimentações Contábeis Definitivo',
         comodel_name='account.move',
+        ondelete='restrict'
     )
 
     @api.multi
@@ -49,9 +55,20 @@ class StockPicking(models.Model):
 
     @api.multi
     def action_provisorio(self):
-        self.env.cr.execute("update stock_picking set state='provisorio'"
-                            "where id=%d" % self.id)
+        for line in self.move_lines:
+            line.state = 'provisorio'
+
         return True
+
+    @api.multi
+    def _state_get(self, field_name, arg):
+        res = {}
+
+        if all([x.state == 'provisorio' for x in self.move_lines]):
+            res[self.id] = 'provisorio'
+            return res
+
+        return super(StockPicking, self)._state_get(field_name, arg)
 
     @api.depends('code', 'state')
     def get_status(self):
@@ -231,3 +248,11 @@ class StockPicking(models.Model):
                         move = self.env['account.move'].create(move_vals)
 
                         stock.definitive_move_id = move
+
+
+class StockMove(models.Model):
+    _inherit = 'stock.move'
+
+    state = fields.Selection(
+        selection_add=[('provisorio', 'Recebimento Provisório')]
+    )
