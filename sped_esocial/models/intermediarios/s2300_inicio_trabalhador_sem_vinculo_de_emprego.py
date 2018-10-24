@@ -43,6 +43,7 @@ class SpedEsocialHrContrato(models.Model, SpedRegistroIntermediario):
             ('3', 'Erro(s)'),
             ('4', 'Sucesso'),
             ('5', 'Precisa Retificar'),
+            ('6', 'Retificado'),
         ],
         compute="compute_situacao_esocial",
         store=True,
