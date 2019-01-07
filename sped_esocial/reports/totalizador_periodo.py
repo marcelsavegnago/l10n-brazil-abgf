@@ -66,24 +66,27 @@ def totalizador_periodo(pool, cr, uid, localcontext, context):
 
     for remuneracao_id in self.remuneracao_ids:
 
-        linha = LinhaTotalizador()
+        for indicador_13 in ['0', '1']:
 
-        # Pegar ultimo registro de sucesso
-        registro_sucesso = get_registro_sucesso(remuneracao_id.sped_registro)
-        
-        linha.nome = remuneracao_id.contract_ids[0].display_name
+            linha = LinhaTotalizador()
 
-        base = registro_sucesso.origem.s5001_id.ideestablot_ids.filtered(
-            lambda x: x.tp_valor == '11').valor or 0.00
-        linha.base = format_money_mask(base)
-        total_base += base
+            # Pegar ultimo registro de sucesso
+            registro_sucesso = get_registro_sucesso(remuneracao_id.sped_registro)
 
-        desconto = registro_sucesso.origem.s5001_id.ideestablot_ids.filtered(
-            lambda x: x.tp_valor == '21').valor or 0.00
-        linha.desconto = format_money_mask(desconto)
-        total_desconto += desconto
+            linha.nome = remuneracao_id.contract_ids[0].display_name
 
-        contribuicao_mensal.append(linha)
+            base = registro_sucesso.origem.s5001_id.ideestablot_ids.filtered(
+                lambda x: x.tp_valor == '11' and x.ind13 == indicador_13).valor or 0.00
+            linha.base = format_money_mask(base)
+            total_base += base
+
+            desconto = registro_sucesso.origem.s5001_id.ideestablot_ids.filtered(
+                lambda x: x.tp_valor == '21' and x.ind13 == indicador_13).valor or 0.00
+            linha.desconto = format_money_mask(desconto)
+            total_desconto += desconto
+
+            if not linha.base == '0,00' and not linha.desconto == '0,00':
+                contribuicao_mensal.append(linha)
 
     for rescisao_id in self.desligamento_ids:
 
