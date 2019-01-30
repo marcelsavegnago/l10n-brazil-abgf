@@ -88,14 +88,6 @@ class AccountFechamento(models.Model):
         default='open',
     )
 
-    @api.model
-    def _needaction_domain_get(self):
-        return [('state', '!=', 'distributed')]
-
-    @api.model
-    def _needaction_domain_get(self):
-        return [('state', '=', 'close')]
-
     total_lancamentos_periodos = fields.Integer(
         string=u'Total de lançamentos',
         compute='_compute_total_lancamentos_periodos',

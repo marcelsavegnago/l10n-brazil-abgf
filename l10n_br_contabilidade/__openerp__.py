@@ -18,17 +18,15 @@
     ],
     'data': [
         'security/ir.model.access.csv',
-        'security/gefin_custos.xml',
-        #
+
         'data/natureza_conta_data.xml',
-        # # Menus
+        # Menus
         'views/menu_contabilidade_abgf.xml',
         # Relatórios
         'reports/report.xml',
         # Visão
         'wizards/fechamento_reabertura_justificativa_wizard.xml',
         'wizards/trial_balance_wizard.xml',
-        'wizards/general_ledger_wizard.xml',
         'views/account_account.xml',
         'views/account_account_report.xml',
         'views/account_account_report_line.xml',
@@ -47,7 +45,6 @@
         'views/account_historico_padrao.xml',
         'views/account_mapeamento.xml',
         'views/account_saldo.xml',
-        'views/gefin_custos.xml',
     ],
     'demo': [
     ],

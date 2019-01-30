@@ -20,4 +20,3 @@ from . import account_mapeamento
 from . import account_period
 from . import account_saldo
 from . import account_divisao_resultado
-from . import gefin_custos

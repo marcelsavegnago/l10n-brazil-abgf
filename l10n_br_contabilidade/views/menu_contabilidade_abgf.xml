@@ -87,12 +87,5 @@
                 sequence="40"
         />
 
-        <menuitem
-                id="abgf_configuracao_tabelas_menu"
-                name="Tabelas"
-                parent="abgf_menu_configuracao_contabilidade"
-                sequence="50"
-        />
-
     </data>
 </openerp>
