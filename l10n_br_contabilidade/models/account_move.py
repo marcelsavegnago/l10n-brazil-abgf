@@ -274,7 +274,14 @@ class AccountMove(models.Model):
                           u'padrões')
 
     @api.multi
-    def reverter_lancamento(self, account_event_reversao_id=False, data=fields.Date.today()):
+    def reverter_lancamento(self, account_event_reversao_id=False,
+                            data=fields.Date.today()):
+        """
+
+        :param account_event_reversao_id:
+        :param data:
+        :return:
+        """
         for record in self:
             account_move_line_obj = self.env['account.move.line']
 
@@ -282,8 +289,7 @@ class AccountMove(models.Model):
                 record.sequencia,
                 record.fiscalyear_id.name, record.resumo)
 
-            period_id = \
-                self.env['account.period'].find(fields.Date.today())
+            period_id = self.env['account.period'].find(data)
 
             account_move_reversao = record.copy({
                 'name': description,
