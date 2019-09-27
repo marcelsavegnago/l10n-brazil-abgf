@@ -39,6 +39,7 @@
         'wizards/import_account_depara.xml',
         'wizards/print_journal_wizard.xml',
         'wizards/verification_account_depara.xml',
+        'wizards/adiantamento_decimo_terceiro_wizard.xml',
 
         'views/account_account.xml',
         'views/account_journal.xml',
@@ -69,6 +70,8 @@
         'views/l10n_br_account.xml',
         'views/account_product.xml',
         'views/inherited_financial_move.xml',
+
+        'reports/adiantamento_decimo_terceiro.xml',
     ],
     'qweb': [
         'static/src/xml/*.xml'
